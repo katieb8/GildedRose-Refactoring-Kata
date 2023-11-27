@@ -7,11 +7,11 @@ namespace GildedRoseTests;
 public class GildedRoseTest
 {
     [Test]
-    public void Foo()
+    public void NameOfItemDoesNotChange()
     {
         var items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
         var app = new GildedRose(items);
         app.UpdateQuality();
-        Assert.AreEqual("fixme", items[0].Name);
+        Assert.AreEqual("foo", items[0].Name);
     }
 }

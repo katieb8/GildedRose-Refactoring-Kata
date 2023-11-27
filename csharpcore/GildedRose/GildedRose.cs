@@ -15,75 +15,125 @@ public class GildedRose
     {
         for (var i = 0; i < _items.Count; i++)
         {
-            if (_items[i].Name != "Aged Brie" && _items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+            if (!IsAgedBrie(i) && !IsBackstagePasses(i) && !IsSulfuras(i) && QualityGreaterThan0(i))
             {
-                if (_items[i].Quality > 0)
+                _items[i].Quality--;
+            }
+            else
+            {
+                IncreaseQualityForSpecialProducts(i);
+            }
+
+            if (!IsSulfuras(i))
+            {
+                _items[i].SellIn--;
+            }
+
+            if (!WithinSellByDate(i))
+            {
+                AdjustQualityIfPassedSellByDate(i);
+            };
+
+        }
+    }
+
+    private bool WithinSellByDate(int item)
+    {
+        return _items[item].SellIn >= 0;
+    }
+
+    private void AdjustQualityIfPassedSellByDate(int item)
+    {
+        if (!IsAgedBrie(item))
+        {
+            if (!IsBackstagePasses(item))
+            {
+                if (_items[item].Quality <= 0) return;
+                if (!IsSulfuras(item))
                 {
-                    if (_items[i].Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        _items[i].Quality = _items[i].Quality - 1;
-                    }
+                    _items[item].Quality--;
                 }
             }
             else
             {
-                if (_items[i].Quality < 50)
-                {
-                    _items[i].Quality = _items[i].Quality + 1;
-
-                    if (_items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (_items[i].SellIn < 11)
-                        {
-                            if (_items[i].Quality < 50)
-                            {
-                                _items[i].Quality = _items[i].Quality + 1;
-                            }
-                        }
-
-                        if (_items[i].SellIn < 6)
-                        {
-                            if (_items[i].Quality < 50)
-                            {
-                                _items[i].Quality = _items[i].Quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (_items[i].Name != "Sulfuras, Hand of Ragnaros")
-            {
-                _items[i].SellIn = _items[i].SellIn - 1;
-            }
-
-            if (_items[i].SellIn < 0)
-            {
-                if (_items[i].Name != "Aged Brie")
-                {
-                    if (_items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (_items[i].Quality > 0)
-                        {
-                            if (_items[i].Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                _items[i].Quality = _items[i].Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _items[i].Quality = _items[i].Quality - _items[i].Quality;
-                    }
-                }
-                else
-                {
-                    if (_items[i].Quality < 50)
-                    {
-                        _items[i].Quality = _items[i].Quality + 1;
-                    }
-                }
+                _items[item].Quality = 0;
             }
         }
+        else
+        {
+            if (QualityLessThan50(item))
+            {
+                _items[item].Quality++;
+            }
+        }
+    }
+
+    private void IncreaseQualityForSpecialProducts(int item)
+    {
+        if (QualityEqualToOrGreaterThan50(item)) return;
+        if (IsBackstagePasses(item))
+        {
+            IncreaseQualityForBackstagePasses(item);
+
+            EnsureItemQualityDoesNotExceed50(item);
+        }
+        else
+        {
+            _items[item].Quality++;
+        }
+    }
+
+    private void IncreaseQualityForBackstagePasses(int item)
+    {
+        if (_items[item].SellIn <= 5)
+        {
+            _items[item].Quality += 3;
+        }
+        else if (_items[item].SellIn <= 10)
+        {
+            _items[item].Quality += 2;
+        }
+        else
+        {
+            _items[item].Quality += 1;
+        }
+    }
+
+    private void EnsureItemQualityDoesNotExceed50(int item)
+    {
+        if (QualityEqualToOrGreaterThan50(item))
+        {
+            _items[item].Quality = 50;
+        }
+    }
+
+    private bool QualityEqualToOrGreaterThan50(int item)
+    {
+        return _items[item].Quality >= 50;
+    }
+
+    private bool QualityLessThan50(int item)
+    {
+        return _items[item].Quality < 50;
+    }
+
+    private bool QualityGreaterThan0(int item)
+    {
+        return _items[item].Quality > 0;
+    }
+
+    private bool IsSulfuras(int item)
+    {
+        return _items[item].Name == "Sulfuras, Hand of Ragnaros";
+    }
+
+    private bool IsBackstagePasses(int item)
+    {
+        return _items[item].Name == "Backstage passes to a TAFKAL80ETC concert";
+    }
+
+    private bool IsAgedBrie(int item)
+    {
+        return _items[item].Name == "Aged Brie";
     }
 }
