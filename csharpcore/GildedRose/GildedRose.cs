@@ -1,45 +1,61 @@
-﻿using System.Collections.Generic;
+﻿using GildedRose;
+using System.Collections.Generic;
 
 namespace GildedRoseKata;
 
 public class GildedRose
 {
-    private readonly IList<Item> _items;
+    private readonly IList<GildedRoseItem> _items;
 
-    public GildedRose(IList<Item> items)
+    public GildedRose(IList<GildedRoseItem> items)
     {
         _items = items;
     }
 
     public void UpdateQuality()
     {
+        //foreach (var item in _items)
+        //{
+        //    item.UpdateQuality();
+        //    item.Item.SellIn--;
+        //}
+
         for (var i = 0; i < _items.Count; i++)
         {
-            if (!IsAgedBrie(i) && !IsBackstagePasses(i) && !IsSulfuras(i) && QualityGreaterThan0(i))
+            if (_items[i] is StandardItem)
             {
-                _items[i].Quality--;
+                _items[i].UpdateQuality();
+                _items[i].Item.SellIn--;
             }
             else
             {
-                IncreaseQualityForSpecialProducts(i);
+                if (!IsAgedBrie(i) && !IsBackstagePasses(i) && !IsSulfuras(i) && QualityGreaterThan0(i))
+                {
+                    _items[i].Item.Quality--;
+                }
+                else
+                {
+                    IncreaseQualityForSpecialProducts(i);
+                }
+
+                if (!IsSulfuras(i))
+                {
+                    _items[i].Item.SellIn--;
+                }
+
+                if (!WithinSellByDate(i))
+                {
+                    AdjustQualityIfPassedSellByDate(i);
+                };
             }
 
-            if (!IsSulfuras(i))
-            {
-                _items[i].SellIn--;
-            }
-
-            if (!WithinSellByDate(i))
-            {
-                AdjustQualityIfPassedSellByDate(i);
-            };
 
         }
     }
 
     private bool WithinSellByDate(int item)
     {
-        return _items[item].SellIn >= 0;
+        return _items[item].Item.SellIn >= 0;
     }
 
     private void AdjustQualityIfPassedSellByDate(int item)
@@ -48,22 +64,22 @@ public class GildedRose
         {
             if (!IsBackstagePasses(item))
             {
-                if (_items[item].Quality <= 0) return;
+                if (_items[item].Item.Quality <= 0) return;
                 if (!IsSulfuras(item))
                 {
-                    _items[item].Quality--;
+                    _items[item].Item.Quality--;
                 }
             }
             else
             {
-                _items[item].Quality = 0;
+                _items[item].Item.Quality = 0;
             }
         }
         else
         {
             if (QualityLessThan50(item))
             {
-                _items[item].Quality++;
+                _items[item].Item.Quality++;
             }
         }
     }
@@ -79,23 +95,23 @@ public class GildedRose
         }
         else
         {
-            _items[item].Quality++;
+            _items[item].Item.Quality++;
         }
     }
 
     private void IncreaseQualityForBackstagePasses(int item)
     {
-        if (_items[item].SellIn <= 5)
+        if (_items[item].Item.SellIn <= 5)
         {
-            _items[item].Quality += 3;
+            _items[item].Item.Quality += 3;
         }
-        else if (_items[item].SellIn <= 10)
+        else if (_items[item].Item.SellIn <= 10)
         {
-            _items[item].Quality += 2;
+            _items[item].Item.Quality += 2;
         }
         else
         {
-            _items[item].Quality += 1;
+            _items[item].Item.Quality += 1;
         }
     }
 
@@ -103,37 +119,37 @@ public class GildedRose
     {
         if (QualityEqualToOrGreaterThan50(item))
         {
-            _items[item].Quality = 50;
+            _items[item].Item.Quality = 50;
         }
     }
 
     private bool QualityEqualToOrGreaterThan50(int item)
     {
-        return _items[item].Quality >= 50;
+        return _items[item].Item.Quality >= 50;
     }
 
     private bool QualityLessThan50(int item)
     {
-        return _items[item].Quality < 50;
+        return _items[item].Item.Quality < 50;
     }
 
     private bool QualityGreaterThan0(int item)
     {
-        return _items[item].Quality > 0;
+        return _items[item].Item.Quality > 0;
     }
 
     private bool IsSulfuras(int item)
     {
-        return _items[item].Name == "Sulfuras, Hand of Ragnaros";
+        return _items[item] is SulfurasItem;
     }
 
     private bool IsBackstagePasses(int item)
     {
-        return _items[item].Name == "Backstage passes to a TAFKAL80ETC concert";
+        return _items[item] is BackstagePassItem;
     }
 
     private bool IsAgedBrie(int item)
     {
-        return _items[item].Name == "Aged Brie";
+        return _items[item] is AgedBrieItem;
     }
 }
