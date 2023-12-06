@@ -1,13 +1,8 @@
 ﻿using GildedRoseKata;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GildedRose
 {
-    public class ConjuredItem :GildedRoseItem
+    public class ConjuredItem : GildedRoseItem
     {
         public ConjuredItem(Item item) : base(item)
         {
@@ -18,7 +13,7 @@ namespace GildedRose
             var sellIn = Item.SellIn;
             if (sellIn > 0)
             {
-                Item.Quality-=2;
+                Item.Quality -= 2;
             }
             else
             {

@@ -1,13 +1,14 @@
-﻿namespace GildedRoseTests;
+﻿using NUnit.Framework;
 
-//public class GildedRoseTest
-//{
-//    [Test]
-//    public void NameOfItemDoesNotChange()
-//    {
-//        var items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
-//        var app = new GildedRoseKata.GildedRose(items);
-//        app.UpdateQuality();
-//        Assert.AreEqual("foo", items[0].Name);
-//    }
-//}
+namespace GildedRoseTests;
+
+public class GildedRoseTest
+{
+    [Test]
+    public void StandardItemQualityDecreasesBy1_WhenSellInNotPassed()
+    {
+        var standardItem = ItemBuilder.CreateStandardItem(30, 5);
+        standardItem.UpdateQuality();
+        Assert.AreEqual(29, standardItem.Item.Quality);
+    }
+}
