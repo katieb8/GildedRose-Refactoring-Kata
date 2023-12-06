@@ -11,6 +11,8 @@ namespace GildedRose
             Item = item;
         }
 
-        public abstract void UpdateQuality();
+       public abstract void UpdateQuality();
+
+        public abstract void UpdateSellIn();
     }
 }

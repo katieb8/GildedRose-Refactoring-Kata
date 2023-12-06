@@ -1,4 +1,5 @@
-﻿using GildedRoseKata;
+﻿using System.Text;
+using GildedRoseKata;
 
 namespace GildedRose
 {
@@ -10,7 +11,20 @@ namespace GildedRose
 
         public override void UpdateQuality()
         {
-            throw new System.NotImplementedException();
+            var sellIn = Item.SellIn;
+            if (sellIn > 0)
+            {
+                Item.Quality++;
+            }
+            else
+            {
+                Item.Quality += 2;
+            }
+        }
+
+        public override void UpdateSellIn()
+        {
+            Item.SellIn--;
         }
     }
 }

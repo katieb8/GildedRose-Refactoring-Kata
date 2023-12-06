@@ -11,4 +11,8 @@ public class SulfurasItem : GildedRoseItem
     public override void UpdateQuality()
     {
     }
+
+    public override void UpdateSellIn()
+    {
+    }
 }

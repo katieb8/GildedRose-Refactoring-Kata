@@ -1,10 +1,15 @@
 ﻿using GildedRoseKata;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GildedRose
 {
-    public class StandardItem : GildedRoseItem
+    public class ConjuredItem :GildedRoseItem
     {
-        public StandardItem(Item item) : base(item)
+        public ConjuredItem(Item item) : base(item)
         {
         }
 
@@ -13,11 +18,11 @@ namespace GildedRose
             var sellIn = Item.SellIn;
             if (sellIn > 0)
             {
-                Item.Quality--;
+                Item.Quality-=2;
             }
             else
             {
-                Item.Quality -= 2;
+                Item.Quality -= 4;
             }
 
             if (Item.Quality < 0)

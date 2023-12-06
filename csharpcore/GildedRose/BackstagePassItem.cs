@@ -10,7 +10,32 @@ namespace GildedRose
 
         public override void UpdateQuality()
         {
-            throw new System.NotImplementedException();
+            if (Item.SellIn <= 0)
+            {
+                Item.Quality = 0;
+            }
+            else if (Item.SellIn <= 5)
+            {
+                Item.Quality += 3;
+            }
+            else if (Item.SellIn <= 10)
+            {
+                Item.Quality += 2;
+            }
+            else
+            {
+                Item.Quality += 1;
+            }
+
+            if (Item.Quality > 50)
+            {
+                Item.Quality = 50;
+            }
+        }
+
+        public override void UpdateSellIn()
+        {
+            Item.SellIn--;
         }
     }
 }

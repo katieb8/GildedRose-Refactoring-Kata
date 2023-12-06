@@ -36,8 +36,8 @@ public static class TextTestFixture
                 SellIn = 5,
                 Quality = 49
             }),
-            new StandardItem( // this conjured item does not work properly yet
-                new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6})
+            new ConjuredItem( // this conjured item does not work properly yet
+                new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 16})
         };
 
 
