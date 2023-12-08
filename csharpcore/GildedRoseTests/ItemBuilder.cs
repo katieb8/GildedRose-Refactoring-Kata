@@ -1,5 +1,6 @@
 ﻿using GildedRose;
 using GildedRoseKata;
+using System;
 
 namespace GildedRoseTests
 {
@@ -8,6 +9,11 @@ namespace GildedRoseTests
         public static StandardItem CreateStandardItem(int quality, int sellIn)
         {
             return new StandardItem(new Item { Name = "standard item", Quality = quality, SellIn = sellIn });
+        }
+
+        public static AgedBrieItem CreateAgedBrieItem(int quality, int sellIn)
+        {
+            return new AgedBrieItem(new Item { Name = "aged brie item", Quality = quality, SellIn = sellIn });
         }
     }
 }
