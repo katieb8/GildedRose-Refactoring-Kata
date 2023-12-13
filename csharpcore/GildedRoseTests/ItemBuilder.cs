@@ -15,5 +15,13 @@ namespace GildedRoseTests
         {
             return new AgedBrieItem(new Item { Name = "aged brie item", Quality = quality, SellIn = sellIn });
         }
+        public static SulfurasItem CreateSulfurasItem(int quality, int sellIn)
+        {
+            return new SulfurasItem(new Item { Name = "sulfuras item", Quality = quality, SellIn = sellIn });
+        }
+        public static BackstagePassItem CreateBackstagePassItem(int quality, int sellIn)
+        {
+            return new BackstagePassItem(new Item { Name = "backstage pass item", Quality = quality, SellIn = sellIn });
+        }
     }
 }
