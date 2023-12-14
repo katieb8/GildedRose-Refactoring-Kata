@@ -37,7 +37,7 @@ public class GildedRoseTest
         Assert.AreEqual(4, agedBrieItem.Item.Quality);
     }
 
-    [Test] // This is failing! gets to 52??
+    [Test]
     public void AgedBrieItemQualityIsNeverOver50()
     {
         var agedBrieItem = ItemBuilder.CreateAgedBrieItem(50, -36);

@@ -27,10 +27,7 @@ namespace GildedRose
                 Item.Quality += 1;
             }
 
-            if (Item.Quality > 50)
-            {
-                Item.Quality = 50;
-            }
+            UpdateQualityIfOver50();
         }
 
         public override void UpdateSellIn()

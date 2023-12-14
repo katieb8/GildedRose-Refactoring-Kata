@@ -1,6 +1,5 @@
 ﻿using GildedRose;
 using GildedRoseKata;
-using System;
 
 namespace GildedRoseTests
 {
