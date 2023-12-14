@@ -11,7 +11,7 @@ namespace GildedRose
             Item = item;
         }
 
-        public void UpdateQualityIfOver50()
+        protected void UpdateQualityIfOver50()
         {
             if (Item.Quality > 50)
             {
